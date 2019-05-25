@@ -18,5 +18,6 @@ require (
 	github.com/satori/uuid v0.0.0-20160927100844-b061729afc07
 	golang.org/x/crypto v0.0.0-20190506204251-e1dfcc566284
 	golang.org/x/net v0.0.0-20190502183928-7f726cade0ab
+	google.golang.org/grpc v1.21.0 // indirect
 	gopkg.in/yaml.v2 v2.2.2
 )

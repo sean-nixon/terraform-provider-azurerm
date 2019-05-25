@@ -55,6 +55,7 @@ import (
 	MsSql "github.com/Azure/azure-sdk-for-go/services/preview/sql/mgmt/2017-10-01-preview/sql"
 	"github.com/Azure/azure-sdk-for-go/services/recoveryservices/mgmt/2016-06-01/recoveryservices"
 	"github.com/Azure/azure-sdk-for-go/services/recoveryservices/mgmt/2017-07-01/backup"
+	"github.com/Azure/azure-sdk-for-go/services/recoveryservices/mgmt/2018-01-10/siterecovery"
 	"github.com/Azure/azure-sdk-for-go/services/redis/mgmt/2018-03-01/redis"
 	"github.com/Azure/azure-sdk-for-go/services/relay/mgmt/2017-04-01/relay"
 	"github.com/Azure/azure-sdk-for-go/services/resources/mgmt/2016-06-01/subscriptions"
@@ -1545,4 +1546,12 @@ func (c *ArmClient) getQueueServiceClientForStorageAccount(ctx context.Context, 
 
 	queueClient := storageClient.GetQueueService()
 	return &queueClient, true, nil
+}
+
+func (c *ArmClient) getReplicationFabricClientForRecoveryServicesVault(resourceGroupName string, vaultName string) *siterecovery.ReplicationFabricsClient {
+	baseURI := c.recoveryServicesVaultsClient.BaseURI
+	auth := c.recoveryServicesVaultsClient.Authorizer
+	replicationFabricsClient := siterecovery.NewReplicationFabricsClientWithBaseURI(baseURI, c.subscriptionId, resourceGroupName, vaultName)
+	c.configureClient(&replicationFabricsClient.Client, auth)
+	return &replicationFabricsClient
 }
